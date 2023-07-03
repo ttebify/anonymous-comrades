@@ -13,7 +13,7 @@ To spin up the Anonymous Comrades application locally, follow these steps:
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/your-username/anonymous-comrades.git
+    git clone https://github.com/ttebify/anonymous-comrades.git
     ```
 
 2. Navigate to the project directory:
@@ -44,6 +44,13 @@ To spin up the Anonymous Comrades application locally, follow these steps:
     ```
 
 8. Open your web browser and visit `http://localhost:8000` to access the Anonymous Comrades application.
+
+## Meet the Team
+<a href="https://github.com/ttebify/anonymous-comrades/graphs/contributors" style="display: flex; align-items: center;">
+<p>
+  <img src="https://contrib.rocks/image?repo=ttebify/anonymous-comrades" alt="A table of avatars from the project's contributors" />
+</p>
+</a>
 
 ## License
 This project is licensed under the MIT License. Feel free to use and modify the codebase as per the terms of the license.
