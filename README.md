@@ -40,10 +40,9 @@ To spin up the Anonymous Comrades application locally, follow these steps:
     php artisan key:generate
     ```
 
-6. Run the database migrations:
-
+6. Run the database migrations and seed  the database:
     ```bash
-    php artisan migrate
+    php artisan migrate:fresh --seed
     ```
 
 7. Start the development server:
