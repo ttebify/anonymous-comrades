@@ -65,6 +65,8 @@ To spin up the Anonymous Comrades application locally, follow these steps:
 
 Design and Requirements: [Link to Design and Requirements Document](https://docs.google.com/document/d/1bbuqOZqjE02jDvNPEOsTPYvvZo_jeWzAVkCGicUh7fU/edit?usp=sharing)
 
+Postman Collection: [Link to Anonymous Comrades Postman Collection](https://documenter.getpostman.com/view/28339583/2s93zFWJhw)
+
 ## License
 
 This project is licensed under the MIT License. Feel free to use and modify the codebase as per the terms of the license.
