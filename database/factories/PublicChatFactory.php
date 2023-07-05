@@ -6,9 +6,9 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ChatRoom>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PublicChat>
  */
-class ChatRoomFactory extends Factory
+class PublicChatFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +18,8 @@ class ChatRoomFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->name,
-            'subject' => $this->faker->text(15),
+            'content' => $this->faker->paragraph(),
+            'hidden' => $this->faker->boolean,
             'created_by' => function () {
                 return User::factory()->create()->id;
             },

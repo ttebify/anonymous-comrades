@@ -3,17 +3,16 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Ramsey\Uuid\Uuid;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
-
+    use HasApiTokens, HasFactory, Notifiable, HasUlids;
 
     public $incrementing = false;
 
@@ -55,14 +54,8 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected static function boot()
+    public function messages()
     {
-        parent::boot();
-
-        static::creating(function ($model) {
-            $model->{$model->getKeyName()} = (string) Uuid::uuid4();
-        });
+        return $this->hasMany(Messages::class, 'sender');
     }
-
-
 }

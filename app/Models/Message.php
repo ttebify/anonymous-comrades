@@ -2,17 +2,17 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Ramsey\Uuid\Uuid;
 
 class Message extends Model
 {
     use HasFactory;
-
+    use HasUlids;
 
     public $incrementing = false;
-    
+
     protected $keyType = 'string';
 
     protected $fillable = [
@@ -21,15 +21,6 @@ class Message extends Model
         'chat_room',
     ];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::creating(function ($model) {
-            $model->{$model->getKeyName()} = (string) Uuid::uuid4();
-        });
-
-    }
     public function sender()
     {
         return $this->belongsTo(User::class, 'sender');
