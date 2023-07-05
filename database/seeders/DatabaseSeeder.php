@@ -14,10 +14,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-       User::factory(5)->create();
-
-       $this->call(MessageSeeder::class);
-       $this->call(ChatRoomSeeder::class);
-
+        $this->call(UserSeeder::class);
+        $this->call(MessageSeeder::class);
+        $this->call(ChatRoomSeeder::class);
+        $this->call(PublicChatSeeder::class);
+        $this->call(UserSettingsSeeder::class);
     }
 }
