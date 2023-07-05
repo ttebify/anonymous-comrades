@@ -2,30 +2,33 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Ramsey\Uuid\Uuid;
 
 class PublicChat extends Model
 {
+    use HasFactory;
 
-    public static function boot()
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    protected $fillable = [
+        'content', 'hidden', 'created_by'
+    ];
+
+    protected static function boot()
     {
         parent::boot();
 
-        static::creating(function ($item) {
-            $uid = uniqid();
-            while (self::where('uuid', $uid)->count() > 0) {
-                $uid = uniqid();
-            }
-            $item->uuid = $uid;
+        static::creating(function ($model) {
+            $model->{$model->getKeyName()} = (string) Uuid::uuid4();
         });
     }
 
-    protected $fillable = [
-        'content', 'hidden', 'createdBy'
-    ];
-
     public function createdBy()
     {
-        return $this->belongsTo(User::class, 'createdBy');
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

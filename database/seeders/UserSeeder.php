@@ -11,16 +11,6 @@ class UserSeeder extends Seeder
 {
     public function run()
     {
-        $faker = Faker::create();
-
-        for ($i = 1; $i <= 5; $i++) {
-            User::create([
-                'name' => $faker->name(),
-                'email' => $faker->unique()->safeEmail(),
-                'password' => bcrypt('password'),
-                'email_verified_at' => now(),
-                'remember_token' => Str::random(10),
-            ]);
-        }
+        User::factory()->count(5)->create();
     }
 }

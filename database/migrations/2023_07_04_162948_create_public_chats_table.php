@@ -9,14 +9,13 @@ class CreatePublicChatsTable extends Migration
     public function up()
     {
         Schema::create('public_chats', function (Blueprint $table) {
-            $table->id();
-            $table->uuid('uuid');
+            $table->uuid('id')->primary();
             $table->text('content');
             $table->boolean('hidden')->default(true);
-            $table->unsignedBigInteger('createdBy');
+            $table->uuid('created_by');
             $table->timestamps();
 
-            $table->foreign('createdBy')->references('id')->on('users');
+            $table->foreign('created_by')->references('id')->on('users');
         });
     }
 

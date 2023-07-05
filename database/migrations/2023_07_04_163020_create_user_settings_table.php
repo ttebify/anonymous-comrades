@@ -9,10 +9,10 @@ class CreateUserSettingsTable extends Migration
     public function up()
     {
         Schema::create('user_settings', function (Blueprint $table) {
-            $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->uuid('id')->primary();
+            $table->uuid('user_id');
             $table->string('name');
-            $table->string('value');
+            $table->json('value');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
