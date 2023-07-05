@@ -3,6 +3,11 @@
 // config/chat.php
 
 return [
+    /**
+     * Verification code expiration time in minutes
+     */
+    'verification_code_expiration' => 60,
+
     'chat_styles' => [
         'elegant' => [
             'user_background_image' => 'path/to/image1.jpg',

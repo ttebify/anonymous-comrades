@@ -9,8 +9,8 @@ class CreateUserSettingsTable extends Migration
     public function up()
     {
         Schema::create('user_settings', function (Blueprint $table) {
-            $table->uuid('id')->primary();
-            $table->uuid('user_id');
+            $table->bigIncrements('id');
+            $table->ulid('user_id');
             $table->string('name');
             $table->json('value');
             $table->timestamps();
