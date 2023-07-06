@@ -1,7 +1,5 @@
 <?php
 
-// config/chat.php
-
 return [
     /**
      * Verification code expiration time in minutes

@@ -1,4 +1,5 @@
 <?php
+
 namespace Tests\Unit;
 
 use App\Models\User;
@@ -16,7 +17,7 @@ class UserTest extends TestCase
         $user = User::all();
 
         // Assert that the user was successfully retrieved from the database
-        $this->assertNotNull( $user);
+        $this->assertNotNull($user);
 
     }
 }
