@@ -17,6 +17,8 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'treblle'], static function 
     Route::group(['prefix' => 'users', 'middleware' => ['auth:sanctum']], function () {
         Route::get('/me', [UserController::class, 'getCurrentUser'])->name('user.profile');
         Route::post('/me', [UserController::class, 'updateProfile'])->name('user.update-profile');
+        Route::get('/setting', [UserController::class, 'getSettings'])->name('user.settings');
+        Route::post('/setting', [UserController::class, 'updateSettings'])->name('user.update-settings');
         Route::get('/{uuid}', [UserController::class, 'getUserProfile'])->name('user.get-profile');
     });
 });
