@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\User;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Models\User;
+use App\Models\UserSettings;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -66,5 +67,37 @@ class UserController extends ApiController
         return $this->respond([
             'data' => $user,
         ]);
+    }
+
+    public function getSettings()
+    {
+
+        $user = Auth::user();
+
+        $settings = UserSettings::where('user_id', $user->id)->get();
+
+        return response()->json(['data' => $settings]);
+    }
+
+    public function updateSettings(Request $request)
+    {
+
+        $user = Auth::user();
+
+        $request->validate([
+            'settings' => 'required|array',
+            'settings.*.name' => 'required|string',
+            'settings.*.value' => 'required',
+        ]);
+
+        foreach ($request->settings as $setting) {
+            UserSettings::updateOrCreate([
+                'user_id' => $user->id,
+                'name' => $setting['name']],
+                ['value' => json_encode($setting['value'])]
+            );
+        }
+
+        return response()->json(['message' => 'Settings updated successfully']);
     }
 }
