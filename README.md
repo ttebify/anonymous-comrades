@@ -53,6 +53,24 @@ To spin up the Anonymous Comrades application locally, follow these steps:
 
 8. Open your web browser and visit `http://localhost:8000` to access the Anonymous Comrades application.
 
+## How to Run the Project with SSL Enabled
+
+To run the project on your local development server with SSL enabled, you can utilize ngrok as a proxy server. Ngrok masks the localhost URL and provides a usable URL for your application.
+
+Follow this steps:
+
+1. Install ngrok:
+   Go to https://ngrok.com/download and download the ngrok executable suitable for your operating system. Extract the ngrok executable to a folder on your computer.
+2. Start your local development server:
+   Open a terminal window and navigate to the root directory of your Laravel project. Initiate your local development server by running `php artisan serve` to start the server.
+3. Start ngrok:
+   Open another terminal window and navigate to the folder where you extracted the ngrok executable. Start ngrok by running the following command: `./ngrok http <port>`, where `<port>` is the port number your local development server is running on. For example, if you ran `php artisan serve`, the default port is 8000, so the command would be `./ngrok http 8000`. Ngrok will generate a unique URL for your local development server, which you can access from anywhere.
+4. Use the ngrok URL to access your project:
+   Once ngrok is running, you'll see a screen showing the ngrok URL and some information about the HTTP and HTTPS tunnels.
+   Copy the HTTPS ngrok URL (or the HTTP URL if you don't need HTTPS) and paste it into your own Postman environment variable.
+
+Ensure that you adjust the instructions according to your specific setup and requirements.
+
 ## Meet the Team
 
 <a href="https://github.com/ttebify/anonymous-comrades/graphs/contributors">
