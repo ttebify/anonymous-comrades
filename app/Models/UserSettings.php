@@ -21,6 +21,11 @@ class UserSettings extends Model
         'value' => 'json',
     ];
 
+    const SETTINGS = [
+        'default_chat_style' => 'elegant',
+        'public_chat_visibility' => false
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Models\User;
 use App\Models\UserSettings;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -16,7 +17,6 @@ class UserController extends ApiController
     public function getCurrentUser()
     {
         $user = Auth::user();
-
         return $this->respond(['data' => $user]);
     }
 
@@ -45,7 +45,7 @@ class UserController extends ApiController
                 $user->save();
             }
 
-            activity()->log($user->email.' updated their profile');
+            activity()->log($user->email . ' updated their profile');
 
             return $this->respond(['message' => 'Profile updated successfully', 'data' => $user]);
         } catch (ValidationException $e) {
@@ -53,14 +53,14 @@ class UserController extends ApiController
         } catch (JsonException $e) {
             logger($e, $e->getTrace());
 
-            return $this->respondError('Failed to update profile', 400);
+            return $this->respondError('Failed to update profile', Response::HTTP_BAD_REQUEST);
         }
     }
 
     public function getUserProfile(string $uuid)
     {
         $user = User::find($uuid);
-        if (! $user) {
+        if (!$user) {
             return $this->respondNotFound('User not found');
         }
 
@@ -69,35 +69,49 @@ class UserController extends ApiController
         ]);
     }
 
-    public function getSettings()
+    public function getSettings(Request $request)
     {
+        $user = $request->user();
+        $settings = $user->userSettings;
 
-        $user = Auth::user();
+        if (count($settings) === 0) {
+            $settings  = UserSettings::SETTINGS;
+        }
 
-        $settings = UserSettings::where('user_id', $user->id)->get();
-
-        return response()->json(['data' => $settings]);
+        return $this->respond(['data' => $settings]);
     }
 
     public function updateSettings(Request $request)
     {
+        try {
+            $user = $request->user();
 
-        $user = Auth::user();
+            $request->validate([
+                'settings' => 'required|array',
+                'settings.*.name' => 'required|string|in:' . implode(',', array_keys(UserSettings::SETTINGS)),
+                'settings.*.value' => 'required',
+            ]);
 
-        $request->validate([
-            'settings' => 'required|array',
-            'settings.*.name' => 'required|string',
-            'settings.*.value' => 'required',
-        ]);
+            $knownSettings = array_keys(UserSettings::SETTINGS);
+            $filteredSettings = collect($request->settings)->filter(function ($setting) use ($knownSettings) {
+                return in_array($setting['name'], $knownSettings);
+            });
 
-        foreach ($request->settings as $setting) {
-            UserSettings::updateOrCreate([
-                'user_id' => $user->id,
-                'name' => $setting['name']],
-                ['value' => json_encode($setting['value'])]
-            );
+            foreach ($filteredSettings as $setting) {
+                UserSettings::updateOrCreate(
+                    [
+                        'user_id' => $user->id,
+                        'name' => $setting['name']
+                    ],
+                    ['value' => json_encode($setting['value'])]
+                );
+            }
+
+            return $this->respond(['message' => 'Settings updated successfully']);
+        } catch (JsonException $e) {
+            logger($e, $e->getTrace());
+
+            return $this->respondError('Failed to update settings', Response::HTTP_BAD_REQUEST);
         }
-
-        return response()->json(['message' => 'Settings updated successfully']);
     }
 }
