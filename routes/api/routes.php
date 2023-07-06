@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\PasswordController;
 use App\Http\Controllers\Api\Auth\RegistrationController;
+use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,6 +16,7 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'treblle'], static function 
     });
 
     Route::group(['prefix' => 'users', 'middleware' => ['auth:sanctum']], function () {
+        Route::get('/dashboard', [DashboardController::class, 'getDashboard'])->name('user.dashboard');
         Route::get('/me', [UserController::class, 'getCurrentUser'])->name('user.profile');
         Route::post('/me', [UserController::class, 'updateProfile'])->name('user.update-profile');
         Route::get('/setting', [UserController::class, 'getSettings'])->name('user.settings');
