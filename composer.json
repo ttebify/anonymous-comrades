@@ -10,7 +10,9 @@
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.8",
-        "spatie/laravel-activitylog": "^4.7"
+        "spatie/laravel-activitylog": "^4.7",
+        "treblle/security-headers": "^0.0.3",
+        "treblle/treblle-laravel": "^4.0.35"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

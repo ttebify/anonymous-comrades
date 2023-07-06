@@ -42,6 +42,16 @@ class Kernel extends HttpKernel
             \Laravel\Sanctum\Http\Middleware\EnsureFrontendRequestsAreStateful::class,
             \Illuminate\Routing\Middleware\ThrottleRequests::class.':api',
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
+            \Treblle\SecurityHeaders\Http\Middleware\RemoveHeaders::class,
+            \Treblle\SecurityHeaders\Http\Middleware\StrictTransportSecurity::class,
+            \Treblle\SecurityHeaders\Http\Middleware\SetReferrerPolicy::class,
+            \Treblle\SecurityHeaders\Http\Middleware\PermissionsPolicy::class,
+            \Treblle\SecurityHeaders\Http\Middleware\ContentTypeOptions::class,
+            \Treblle\SecurityHeaders\Http\Middleware\CertificateTransparencyPolicy::class,
+            \App\Http\Middleware\Security\XFrameOptionsMiddleware::class,
+            \App\Http\Middleware\JsonResponseMiddleware::class,
+            \App\Http\Middleware\Security\ContentSecurityPolicyMiddleware::class,
+            \App\Http\Middleware\AddAllowHeader::class,
         ],
     ];
 
@@ -63,5 +73,6 @@ class Kernel extends HttpKernel
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
+        'treblle' => \Treblle\Middlewares\TreblleMiddleware::class,
     ];
 }
