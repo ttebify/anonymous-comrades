@@ -23,7 +23,7 @@ class UserSettings extends Model
 
     const SETTINGS = [
         'default_chat_style' => 'elegant',
-        'public_chat_visibility' => false
+        'public_chat_visibility' => false,
     ];
 
     public function user()

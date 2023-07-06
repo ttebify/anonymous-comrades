@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\Api\Chats\ChatRoomController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\PasswordController;
 use App\Http\Controllers\Api\Auth\RegistrationController;
+use App\Http\Controllers\Api\Chat\ChatRoomController;
+use App\Http\Controllers\Api\Chat\FileUploadController;
 use App\Http\Controllers\Api\DashboardController;
 use App\Http\Controllers\Api\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -33,4 +34,6 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'treblle'], static function 
             Route::delete('/chat-rooms/{uuid}', [ChatRoomController::class, 'destroy'])->name('chat.deleteRoom');
         });
     });
+
+    Route::post('upload/image', [FileUploadController::class, 'uploadImage'])->name('fileUpload');
 });
