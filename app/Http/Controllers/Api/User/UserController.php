@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\ApiController;
 use App\Models\User;
 use App\Models\UserSettings;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
@@ -16,7 +17,6 @@ class UserController extends ApiController
     public function getCurrentUser()
     {
         $user = Auth::user();
-
         return $this->respond(['data' => $user]);
     }
 
@@ -53,7 +53,7 @@ class UserController extends ApiController
         } catch (JsonException $e) {
             logger($e, $e->getTrace());
 
-            return $this->respondError('Failed to update profile', 400);
+            return $this->respondError('Failed to update profile', Response::HTTP_BAD_REQUEST);
         }
     }
 
@@ -111,7 +111,7 @@ class UserController extends ApiController
         } catch (JsonException $e) {
             logger($e, $e->getTrace());
 
-            return $this->respondError('Failed to update settings', 400);
+            return $this->respondError('Failed to update settings', Response::HTTP_BAD_REQUEST);
         }
     }
 }
