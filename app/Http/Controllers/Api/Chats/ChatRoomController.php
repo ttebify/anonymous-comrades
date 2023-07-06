@@ -45,7 +45,7 @@ class ChatRoomController extends ApiController
             return $this->respondNotFound('Room not found');
         }
 
-        return response()->json(['data' => $chatRoom]);
+        return $this->respond(['data' => $chatRoom]);
     }
 
     public function destroy($uuid)
