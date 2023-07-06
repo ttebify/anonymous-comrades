@@ -20,4 +20,3 @@ class AddNullableToUserSettingsValue extends Migration
         });
     }
 }
-

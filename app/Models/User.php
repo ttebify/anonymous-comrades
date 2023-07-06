@@ -41,7 +41,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(ChatRoom::class, 'created_by');
     }
-    
+
     public function messages()
     {
         return $this->hasMany(Messages::class, 'sender');
@@ -51,5 +51,4 @@ class User extends Authenticatable
     {
         return $this->hasMany(UserSettings::class, 'user_id');
     }
-    
 }

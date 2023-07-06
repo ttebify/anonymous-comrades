@@ -17,6 +17,7 @@ class UserController extends ApiController
     public function getCurrentUser()
     {
         $user = Auth::user();
+
         return $this->respond(['data' => $user]);
     }
 
@@ -45,7 +46,7 @@ class UserController extends ApiController
                 $user->save();
             }
 
-            activity()->log($user->email . ' updated their profile');
+            activity()->log($user->email.' updated their profile');
 
             return $this->respond(['message' => 'Profile updated successfully', 'data' => $user]);
         } catch (ValidationException $e) {
@@ -60,7 +61,7 @@ class UserController extends ApiController
     public function getUserProfile(string $uuid)
     {
         $user = User::find($uuid);
-        if (!$user) {
+        if (! $user) {
             return $this->respondNotFound('User not found');
         }
 
@@ -75,7 +76,7 @@ class UserController extends ApiController
         $settings = $user->userSettings;
 
         if (count($settings) === 0) {
-            $settings  = UserSettings::SETTINGS;
+            $settings = UserSettings::SETTINGS;
         }
 
         return $this->respond(['data' => $settings]);
@@ -88,7 +89,7 @@ class UserController extends ApiController
 
             $request->validate([
                 'settings' => 'required|array',
-                'settings.*.name' => 'required|string|in:' . implode(',', array_keys(UserSettings::SETTINGS)),
+                'settings.*.name' => 'required|string|in:'.implode(',', array_keys(UserSettings::SETTINGS)),
                 'settings.*.value' => 'required',
             ]);
 
@@ -101,7 +102,7 @@ class UserController extends ApiController
                 UserSettings::updateOrCreate(
                     [
                         'user_id' => $user->id,
-                        'name' => $setting['name']
+                        'name' => $setting['name'],
                     ],
                     ['value' => json_encode($setting['value'])]
                 );

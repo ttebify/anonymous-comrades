@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\Chats;
+namespace App\Http\Controllers\Api\Chat;
 
 use App\Http\Controllers\Api\ApiController;
 use App\Models\ChatRoom;
@@ -13,6 +13,7 @@ class ChatRoomController extends ApiController
     public function getChatRooms()
     {
         $chatRooms = ChatRoom::all();
+
         return $this->respond(['data' => $chatRooms]);
     }
 
@@ -41,7 +42,7 @@ class ChatRoomController extends ApiController
     public function getChatRoomById($uuid)
     {
         $chatRoom = ChatRoom::find($uuid);
-        if (!$chatRoom) {
+        if (! $chatRoom) {
             return $this->respondNotFound('Room not found');
         }
 
@@ -52,7 +53,7 @@ class ChatRoomController extends ApiController
     {
         try {
             $chatRoom = ChatRoom::find($uuid);
-            if (!$chatRoom) {
+            if (! $chatRoom) {
                 return $this->respondNotFound('Room not found');
             }
             $chatRoom->delete();
