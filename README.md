@@ -9,6 +9,7 @@ The Anonymous Comrades project utilizes the following technologies:
 -   Laravel: A powerful PHP framework for web application development.
 -   MySQL: A popular open-source relational database management system.
 -   Treblle: A comprehensive API monitoring and security platform.
+<img width="500" alt="Screenshot 2023-07-06 at 12 30 59" src="https://github.com/ttebify/anonymous-comrades/assets/86431009/020a5712-aa7f-4421-bd19-48947dd47634">
 
 ## Getting Started
 
