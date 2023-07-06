@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\Chats\ChatRoomController;
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\PasswordController;
 use App\Http\Controllers\Api\Auth\RegistrationController;
@@ -14,11 +15,20 @@ Route::group(['prefix' => 'api/v1', 'middleware' => 'treblle'], static function 
         Route::post('/reset-password', [PasswordController::class, 'resetPassword'])->name('reset-password');
     });
 
-    Route::group(['prefix' => 'users', 'middleware' => ['auth:sanctum']], function () {
-        Route::get('/me', [UserController::class, 'getCurrentUser'])->name('user.profile');
-        Route::post('/me', [UserController::class, 'updateProfile'])->name('user.update-profile');
-        Route::get('/setting', [UserController::class, 'getSettings'])->name('user.settings');
-        Route::post('/setting', [UserController::class, 'updateSettings'])->name('user.update-settings');
-        Route::get('/{uuid}', [UserController::class, 'getUserProfile'])->name('user.get-profile');
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::group(['prefix' => 'users'], function () {
+            Route::get('/me', [UserController::class, 'getCurrentUser'])->name('user.profile');
+            Route::post('/me', [UserController::class, 'updateProfile'])->name('user.update-profile');
+            Route::get('/setting', [UserController::class, 'getSettings'])->name('user.settings');
+            Route::post('/setting', [UserController::class, 'updateSettings'])->name('user.update-settings');
+            Route::get('/{uuid}', [UserController::class, 'getUserProfile'])->name('user.get-profile');
+        });
+
+        Route::group(['prefix' => 'chats'], function () {
+            Route::get('/chat-rooms', [ChatRoomController::class, 'getChatRooms'])->name('chat.rooms');
+            Route::post('/chat-rooms', [ChatRoomController::class, 'createNewChatRoom'])->name('chat.createRoom');
+            Route::get('/chat-rooms/{uuid}', [ChatRoomController::class, 'getChatRoomById'])->name('chat.getRoom');
+            Route::delete('/chat-rooms/{uuid}', [ChatRoomController::class, 'destroy'])->name('chat.deleteRoom');
+        });
     });
 });

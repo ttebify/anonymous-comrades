@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Response;
 
 class ApiController extends Controller
 {
@@ -13,7 +14,7 @@ class ApiController extends Controller
      * @param  array  $headers
      * @return \Illuminate\Http\JsonResponse
      */
-    protected function respond($data, $statusCode = 200, $headers = [])
+    protected function respond($data, $statusCode = Response::HTTP_OK, $headers = [])
     {
         return response()->json($data, $statusCode, $headers);
     }
@@ -35,7 +36,7 @@ class ApiController extends Controller
      */
     protected function respondCreated($data)
     {
-        return $this->respond($data, 201);
+        return $this->respond($data, Response::HTTP_CREATED);
     }
 
     /**
@@ -45,7 +46,7 @@ class ApiController extends Controller
      */
     protected function respondNoContent()
     {
-        return $this->respond(null, 204);
+        return $this->respond(null, Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -71,7 +72,7 @@ class ApiController extends Controller
      */
     protected function respondUnauthorized($message = 'Unauthorized')
     {
-        return $this->respondError($message, 401);
+        return $this->respondError($message, Response::HTTP_UNAUTHORIZED);
     }
 
     /**
@@ -82,7 +83,7 @@ class ApiController extends Controller
      */
     protected function respondForbidden($message = 'Forbidden')
     {
-        return $this->respondError($message, 403);
+        return $this->respondError($message, Response::HTTP_FORBIDDEN);
     }
 
     /**
@@ -93,7 +94,7 @@ class ApiController extends Controller
      */
     protected function respondNotFound($message = 'Not Found')
     {
-        return $this->respondError($message, 404);
+        return $this->respondError($message, Response::HTTP_NOT_FOUND);
     }
 
     /**
@@ -106,7 +107,7 @@ class ApiController extends Controller
         return $this->respond([
             'errors' => [],
             'message' => 'email or password is invalid',
-        ], 422);
+        ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 
     /**
@@ -117,6 +118,6 @@ class ApiController extends Controller
      */
     protected function respondInternalError($message = 'Something went wrong with the request. Our engineers are aware of it and are working to fix it.')
     {
-        return $this->respondError($message, 500);
+        return $this->respondError($message, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
